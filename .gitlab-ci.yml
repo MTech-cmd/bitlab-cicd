@@ -19,18 +19,17 @@ deploy-code-job:
   tags:
     - docker
   variables:
-    GITHUB_URL: "git@github.com:MTech-cmd/bitlab-cicd.git"  # Change this to your GitHub repo
+    GITHUB_URL: "git@github.com:MTech-cmd/bitlab-cicd.git"
   before_script:
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval `ssh-agent -s`
-    # Create the .ssh directory
     - mkdir -p /root/.ssh
-    # Write the SSH key to a file
     - echo "$PRIVATE_SSH_KEY" > /root/.ssh/id_ed25519
     - chmod 600 /root/.ssh/id_ed25519
-    - ssh-add /root/.ssh/id_ed25519
+    - ssh-add /root/.ssh/id_ed25519 || { echo "Failed to add SSH key"; exit 1; }
     - ssh-keyscan -t ed25519 gitlab.com >> ~/.ssh/known_hosts
     - ssh-keyscan -t ed25519 github.com >> ~/.ssh/known_hosts
+
 
   script:
     # Ensure all branches are fetched before merging
