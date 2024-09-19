@@ -23,6 +23,8 @@ deploy-code-job:
   before_script:
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval `ssh-agent -s`
+    # Create the .ssh directory
+    - mkdir -p /root/.ssh
     # Write the SSH key to a file
     - echo "$PRIVATE_SSH_KEY" > /root/.ssh/id_ed25519
     - chmod 600 /root/.ssh/id_ed25519
