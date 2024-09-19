@@ -12,7 +12,7 @@ build-code-job:
     - npm install
     - npm run build
 
-# Deploy job
+# Deploy job: Merge feature branch into main and push to GitHub
 deploy-code-job:
   stage: deploy
   image: node:18-buster
@@ -27,13 +27,16 @@ deploy-code-job:
     # Decode and add the SSH key from base64 to ssh-agent (for ed25519)
     - echo "$PRIVATE_SSH_KEY_B64" | base64 -d | ssh-add -
     - mkdir -p ~/.ssh
-    # Add GitLab and GitHub to known hosts using ed25519
+    # Add GitHub and GitLab to known hosts using ed25519
     - ssh-keyscan -t ed25519 gitlab.com >> ~/.ssh/known_hosts
     - ssh-keyscan -t ed25519 github.com >> ~/.ssh/known_hosts
 
   script:
     # Ensure all branches are fetched before merging
     - git fetch origin
+    # Check out the main branch
     - git checkout main
-    - git merge origin/feature  # Replace 'feature' with the correct branch name
+    # Merge the feature branch into the main branch
+    - git merge origin/feature  # Replace 'feature' with your actual branch name
+    # Push the updated main branch to GitHub
     - git push "$GITHUB_URL" main
