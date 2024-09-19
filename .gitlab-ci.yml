@@ -2,6 +2,7 @@ stages:
   - build
   - deploy
 
+# Build job
 build-code-job:
   stage: build
   image: node:18-buster
@@ -11,22 +12,28 @@ build-code-job:
     - npm install
     - npm run build
 
+# Deploy job
 deploy-code-job:
   stage: deploy
   image: node:18-buster
   tags:
     - docker
   variables:
+    # Add the link to your GitHub repository here
     GITHUB_URL: "git@github.com:MTech-cmd/bitlab-cicd.git"
   before_script:
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval `ssh-agent -s`
-    - ssh-add <(echo "$PRIVATE_SSH_KEY")
+    # Decode and add the SSH key from base64 to ssh-agent (for ed25519)
+    - echo "$PRIVATE_SSH_KEY_B64" | base64 -d | ssh-add -
     - mkdir -p ~/.ssh
+    # Add GitLab and GitHub to known hosts using ed25519
     - ssh-keyscan -t ed25519 gitlab.com >> ~/.ssh/known_hosts
     - ssh-keyscan -t ed25519 github.com >> ~/.ssh/known_hosts
+
   script:
+    # Ensure all branches are fetched before merging
     - git fetch origin
     - git checkout main
-    - git merge origin/feature  # Ensure 'feature' exists
+    - git merge origin/feature  # Replace 'feature' with the correct branch name
     - git push "$GITHUB_URL" main
