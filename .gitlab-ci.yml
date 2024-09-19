@@ -26,7 +26,7 @@ deploy-code-job:
     # Create the .ssh directory
     - mkdir -p /root/.ssh
     # Write the SSH key to a file
-    - echo "$PRIVATE_SSH_KEY" > /root/.ssh/id_ed25519
+    - echo "$PRIVATE_SSH_KEY" | sed 's/\\n/\n/g' > /root/.ssh/id_ed25519
     - chmod 600 /root/.ssh/id_ed25519
     - ssh-add /root/.ssh/id_ed25519
     - mkdir -p ~/.ssh
