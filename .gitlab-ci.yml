@@ -19,19 +19,18 @@ deploy-code-job:
   tags:
     - docker
   variables:
-    GITHUB_URL: "git@github.com:MTech-cmd/bitlab-cicd.git"
-  # before_script:
-  #   - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
-  #   - eval `ssh-agent -s`
-  #   # Create the .ssh directory
-  #   - mkdir -p /root/.ssh
-  #   # Write the SSH key to a file
-  #   - echo "$PRIVATE_SSH_KEY" | sed 's/\\n/\n/g' > /root/.ssh/id_ed25519
-  #   - chmod 600 /root/.ssh/id_ed25519
-  #   - ssh-add /root/.ssh/id_ed25519
-  #   - mkdir -p ~/.ssh
-  #   - ssh-keyscan -t ed25519 gitlab.com >> ~/.ssh/known_hosts
-  #   - ssh-keyscan -t ed25519 github.com >> ~/.ssh/known_hosts
+    GITHUB_URL: "git@github.com:MTech-cmd/bitlab-cicd.git"  # Change this to your GitHub repo
+  before_script:
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval `ssh-agent -s`
+    # Create the .ssh directory
+    - mkdir -p /root/.ssh
+    # Write the SSH key to a file
+    - echo "$PRIVATE_SSH_KEY" > /root/.ssh/id_ed25519
+    - chmod 600 /root/.ssh/id_ed25519
+    - ssh-add /root/.ssh/id_ed25519
+    - ssh-keyscan -t ed25519 gitlab.com >> ~/.ssh/known_hosts
+    - ssh-keyscan -t ed25519 github.com >> ~/.ssh/known_hosts
 
   script:
     # Ensure all branches are fetched before merging
@@ -40,6 +39,5 @@ deploy-code-job:
     - git checkout main
     # Merge the feature branch into the main branch
     - git merge origin/feature  # Replace 'feature' with your actual branch name
-    - git push
     # Push the updated main branch to GitHub
-    # - git push "$GITHUB_URL" main
+    - git push "$GITHUB_URL" main
