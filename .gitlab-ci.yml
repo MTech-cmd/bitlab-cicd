@@ -25,10 +25,14 @@ deploy-code-job:
     - eval `ssh-agent -s`
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
+    # Add SSH private key securely
     - echo "$PRIVATE_SSH_KEY" | tr -d '\r' > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
     - ssh-add ~/.ssh/id_rsa
     - ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+    # Configure Git user
+    - git config --global user.email "ci-runner@example.com"
+    - git config --global user.name "CI Runner"
 
   script:
     # Ensure all branches are fetched before merging
