@@ -35,13 +35,12 @@ deploy-code-job:
     - git config --global user.name "CI Runner"
 
   script:
-    # Ensure all branches are fetched before merging
-    - git fetch --all
-    # Checkout the main branch
+    # Ensure all branches are fetched from GitLab (origin)
+    - git fetch origin
+    # Checkout the main branch from GitLab
     - git checkout main
-    # Merge feature branch into main
+    # Merge feature branch from GitLab into main
     - git merge origin/feature  # Replace 'feature' with your actual branch name
-    # Pull any changes from the remote main branch to avoid divergence
-    - git pull "$GITHUB_URL" main --rebase
-    # Push the updated main branch to GitHub
-    - git push "$GITHUB_URL" main
+    # Push the updated main branch to GitHub (set remote 'github')
+    - git remote add github "$GITHUB_URL"
+    - git push github main
