@@ -47,4 +47,5 @@ deploy-code-job:
     # First time push
     # - git remote add github git@github.com:MTech-cmd/bitlab-cicd.git
     - git branch -M main
-    - git push -u github main
+    - git pull -u github main
+    - git push -u github main --rebase
