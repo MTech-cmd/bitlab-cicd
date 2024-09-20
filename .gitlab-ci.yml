@@ -42,6 +42,9 @@ deploy-code-job:
     # Merge feature branch from GitLab into main
     - git merge origin/feature  # Replace 'feature' with your actual branch name
     # Push the updated main branch to GitHub (set remote 'github')
-    # - git remote add github "$GITHUB_URL"
-    - git pull github main
-    - git push github main
+    # - git pull github main
+    # - git push github main
+    # First time push
+    - git remote add origin git@github.com:MTech-cmd/bitlab-cicd.git
+    - git branch -M main
+    - git push -u origin main
