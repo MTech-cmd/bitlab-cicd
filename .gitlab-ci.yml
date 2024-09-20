@@ -48,4 +48,4 @@ deploy-code-job:
     # - git remote add github git@github.com:MTech-cmd/bitlab-cicd.git
     - git branch -M main
     - git pull github main
-    - git push -u github main --rebase
+    - git push github main
