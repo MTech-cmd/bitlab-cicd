@@ -36,6 +36,10 @@ deploy-code-job:
     - git fetch origin
     # Check out the main branch
     - git checkout main
+    # checking branches
+    - git branch -a
+    # check ssh connection to github
+    - ssh -T git@github.com
     # Merge the feature branch into the main branch
     - git merge origin/feature  # Replace 'feature' with your actual branch name
     # Push the updated main branch to GitHub
