@@ -45,6 +45,6 @@ deploy-code-job:
     # - git pull github main
     # - git push github main
     # First time push
-    - git remote add origin git@github.com:MTech-cmd/bitlab-cicd.git
+    - git remote add github git@github.com:MTech-cmd/bitlab-cicd.git
     - git branch -M main
-    - git push -u origin main
+    - git push -u github main
