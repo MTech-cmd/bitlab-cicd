@@ -45,4 +45,4 @@ deploy-code-job:
     # check ssh connection to github
     - git merge origin/feature  # Replace 'feature' with your actual branch name
     # Push the updated main branch to GitHub
-    - git push "$GITHUB_URL" main
+    - git push "$GITHUB_URL" -f main
