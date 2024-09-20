@@ -43,4 +43,5 @@ deploy-code-job:
     - git merge origin/feature  # Replace 'feature' with your actual branch name
     # Push the updated main branch to GitHub (set remote 'github')
     - git remote add github "$GITHUB_URL"
+    - git pull github main
     - git push github main
