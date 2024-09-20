@@ -41,7 +41,7 @@ deploy-code-job:
     - git checkout main
     # Merge feature branch from GitLab into main
     - git merge origin/feature
-    - git push origin feature
+    - git push origin main
     # Push the updated main branch to GitHub (set remote 'github')
     # - git pull github main
     # - git push github main

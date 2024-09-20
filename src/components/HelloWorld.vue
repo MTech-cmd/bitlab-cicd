@@ -24,7 +24,7 @@ const count = ref(0)
     <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
       >create-vue</a
     >, the Vue + Vite + BitLab starter
-    Attempt: 1
+    Attempt: 2
   </p>
   <p>
     Learn more about IDE Support for Vue in the
