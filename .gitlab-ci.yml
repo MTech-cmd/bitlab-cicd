@@ -25,8 +25,7 @@ deploy-code-job:
     - eval `ssh-agent -s`
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - echo "$PRIVATE_SSH_KEY" > ~/.ssh/id_ed25519
-    # - chmod 600 /root/.ssh/id_ed25519
+    - echo "$PRIVATE_SSH_KEY" > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_ed25519
     - ssh-add
     - ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts
