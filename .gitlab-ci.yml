@@ -25,24 +25,18 @@ deploy-code-job:
     - eval `ssh-agent -s`
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - echo "$PRIVATE_SSH_KEY" > ~/.ssh/id_rsa
-    # See content id_rsa
-    - cat ~/.ssh/id_rsa
-    - ls ~/.ssh
+    # Add SSH private key securely
+    - echo "$PRIVATE_SSH_KEY" | tr -d '\r' > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
-    - ssh-add
-    - ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts
+    - ssh-add ~/.ssh/id_rsa
     - ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 
-
   script:
-    # Ensure all branches are fetched before merging
-    - git fetch origin
-    # Check out the main branch
+    # Fetch all remote branches to ensure we have the latest changes
+    - git fetch --all
+    # Checkout the main branch
     - git checkout main
-    # checking branches
-    - git branch -a
-    # check ssh connection to github
+    # Merge feature branch into main
     - git merge origin/feature  # Replace 'feature' with your actual branch name
     # Push the updated main branch to GitHub
-    - git push "$GITHUB_URL" -f main
+    - git push "$GITHUB_URL" main
