@@ -42,6 +42,6 @@ deploy-code-job:
     # Merge feature branch into main
     - git merge origin/feature  # Replace 'feature' with your actual branch name
     # Pull any changes from the remote main branch to avoid divergence
-    - git pull origin main --rebase
+    - git pull "$GITHUB_URL" main --rebase
     # Push the updated main branch to GitHub
     - git push "$GITHUB_URL" main
